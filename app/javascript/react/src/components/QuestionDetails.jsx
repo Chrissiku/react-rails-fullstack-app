@@ -36,13 +36,20 @@ import React, { Component, useState } from "react";
 class QuestionDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = { likeCount: 0 };
+    this.state = { likeCount: 0, dislikeCount: 0 };
     this.updateLikeCounter = this.updateLikeCounter.bind(this);
+    this.updateDisLikeCounter = this.updateDisLikeCounter.bind(this);
   }
 
   updateLikeCounter() {
     this.setState(function (state) {
       return { likeCount: state.likeCount + 1 };
+    });
+  }
+
+  updateDisLikeCounter() {
+    this.setState(function (state) {
+      return { dislikeCount: state.dislikeCount + 1 };
     });
   }
 
@@ -54,22 +61,36 @@ class QuestionDetails extends Component {
           <p className="lead">
             <span className="badge bg-primary">{this.props.question.tag}</span>
           </p>
+
           <button
             type="button"
-            className="btn btn-primary mt-1"
+            className="btn btn-primary position-relative me-3"
             onClick={this.updateLikeCounter}
           >
             Like
+            {this.state.likeCount > 0 ? (
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {this.state.likeCount}
+              </span>
+            ) : (
+              ""
+            )}
           </button>
-          {this.state.likeCount > 0 ? (
-            <span className="ms-2 badge bg-primary">
-              {this.state.likeCount}
-            </span>
-          ) : (
-            <span className="ms-2 badge bg-primary">
-              {this.state.likeCount}
-            </span>
-          )}
+
+          <button
+            type="button"
+            className="btn btn-warning position-relative"
+            onClick={this.updateDisLikeCounter}
+          >
+            DisLike
+            {this.state.dislikeCount > 0 ? (
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {this.state.dislikeCount}
+              </span>
+            ) : (
+              ""
+            )}
+          </button>
         </div>
       </div>
     );
