@@ -53,7 +53,7 @@ class QuestionDetails extends Component {
           <h3 className="card-title">{this.props.question.title}</h3>
           <p className="lead">
             <span className="badge bg-primary">{this.props.question.tag}</span>
-          </p>  
+          </p>
           <button
             type="button"
             className="btn btn-primary mt-1"
