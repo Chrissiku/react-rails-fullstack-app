@@ -15,12 +15,18 @@ const QuestionList = () => {
 
   const [questionsList, setQuestionsList] = useState([]);
   const [selectedOption, setSelectedOption] = useState(questionsTags[0].value);
+  const [isShowAlert, setIsShowAlert] = useState(false);
 
   const fetchQuestionsList = () => {
     fetch(URL)
       .then((response) => response.json())
       .then((data) => {
         setQuestionsList(data);
+        if (data.length === 0) {
+          setIsShowAlert(true);
+        } else {
+          setIsShowAlert(false);
+        }
       });
   };
 
@@ -35,6 +41,11 @@ const QuestionList = () => {
       .then((response) => response.json())
       .then((data) => {
         setQuestionsList(data);
+        if (data.length === 0) {
+          setIsShowAlert(true);
+        } else {
+          setIsShowAlert(false);
+        }
       });
   };
 
@@ -86,11 +97,12 @@ const QuestionList = () => {
             </option>
           ))}
         </select>
-        {questionsList.length > 0 ? (
-          questionsList.map((question) => (
-            <QuestionDetails question={question} key={question.id} />
-          ))
-        ) : (
+        {questionsList.length > 0
+          ? questionsList.map((question) => (
+              <QuestionDetails question={question} key={question.id} />
+            ))
+          : ""}
+        {isShowAlert && (
           <EmptyList tagName={questionsTags[selectedOption].label} />
         )}
       </div>
