@@ -1,11 +1,11 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
+import QuestionList from "./QuestionList";
 
 const Welcome = () => {
   return (
     <div className="container">
-      <h1>Welcome to my fullstack project</h1>
-      <p>Welcome to my fullstack project</p>
+      <QuestionList />
     </div>
   );
 };
