@@ -2,7 +2,7 @@ class Api::V1::QuestionsController < ApplicationController
   protect_from_forgery with: :null_session
 
   def index
-    @questions = Question.all
+    @questions = Question.all.order(created_at: :asc)
     render json: @questions, status: :ok
   end
 

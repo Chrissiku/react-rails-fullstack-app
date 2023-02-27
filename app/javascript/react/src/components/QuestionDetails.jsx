@@ -1,4 +1,5 @@
 import React, { Component, useState } from "react";
+import { URL } from "./utils/constants";
 
 // const QuestionDetails = (props) => {
 //   const [likeCount, setLikeCount] = useState(0);
@@ -36,7 +37,10 @@ import React, { Component, useState } from "react";
 class QuestionDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = { likeCount: 0, dislikeCount: 0 };
+    this.state = {
+      likeCount: this.props.question.likes_count,
+      dislikeCount: this.props.question.dislikes_count,
+    };
     this.updateLikeCounter = this.updateLikeCounter.bind(this);
     this.updateDisLikeCounter = this.updateDisLikeCounter.bind(this);
   }
@@ -45,13 +49,32 @@ class QuestionDetails extends Component {
     this.setState(function (state) {
       return { likeCount: state.likeCount + 1 };
     });
+    this.updateQuestionCounter({ count_for: "like" });
   }
 
   updateDisLikeCounter() {
     this.setState(function (state) {
       return { dislikeCount: state.dislikeCount + 1 };
     });
+    this.updateQuestionCounter({ count_for: "dislike" });
   }
+
+  updateQuestionCounter = (data) => {
+    fetch(`${URL}/${this.props.question.id}/update_counter`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   render() {
     return (
@@ -64,7 +87,7 @@ class QuestionDetails extends Component {
 
           <button
             type="button"
-            className="btn btn-primary position-relative me-3"
+            className="btn btn-sm btn-primary position-relative me-3"
             onClick={this.updateLikeCounter}
           >
             Like
@@ -79,7 +102,7 @@ class QuestionDetails extends Component {
 
           <button
             type="button"
-            className="btn btn-warning position-relative"
+            className="btn btn-sm btn-warning position-relative"
             onClick={this.updateDisLikeCounter}
           >
             DisLike

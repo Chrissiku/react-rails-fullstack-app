@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import QuestionDetails from "./QuestionDetails";
+import { URL } from "./utils/constants";
 
 const QuestionList = () => {
   const [questionsList, setQuestionsList] = useState([]);
-  const BASE_URL = "http://127.0.0.1:5000/api/v1/questions";
-  const URL = "/api/v1/questions";
 
   const fetchQuestionsList = () => {
     fetch(URL)
