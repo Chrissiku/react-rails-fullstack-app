@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
+import QuestionDetails from "./QuestionDetails";
 
 const QuestionList = () => {
   const questions = [
@@ -34,18 +35,12 @@ const QuestionList = () => {
     { id: 9, title: "What are blocks in Ruby?", tag: "Ruby" },
     { id: 10, title: "Does the order of hashes matter in Ruby?", tag: "Ruby" },
   ];
+
   return (
     <div className="row">
       <div className="col-lg-10 mx-auto">
         {questions.map((question) => (
-          <div className="card rounded-0 mt-3" key={question.id}>
-            <div className="card-body">
-              <h3 className="card-title">{question.title}</h3>
-              <p className="lead">
-                <span className="badge bg-primary">{question.tag}</span>
-              </p>
-            </div>
-          </div>
+          <QuestionDetails question={question} key={question.id} />
         ))}
       </div>
     </div>
