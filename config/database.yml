@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: rails_react_development
+
+test:
+  <<: *default
+  database: rails_react_test
+
+production:
+  <<: *default
+  database: rails_react_production
+  username: rails_react
+  password: <%= ENV["RAILS_REACT_DATABASE_PASSWORD"] %>
