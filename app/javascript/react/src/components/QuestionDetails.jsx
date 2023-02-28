@@ -80,7 +80,7 @@ class QuestionDetails extends Component {
     return (
       <div className="card rounded-0 mt-3">
         <div className="card-body">
-          <h3 className="card-title">{this.props.question.title}</h3>
+          <h4 className="card-title">{this.props.question.title}</h4>
           <p className="lead">
             <span className="badge bg-primary">{this.props.question.tag}</span>
           </p>

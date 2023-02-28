@@ -3,6 +3,7 @@ import QuestionDetails from "./QuestionDetails";
 import { URL } from "./utils/constants";
 import EmptyList from "./EmptyList";
 import Loader from "./Loader";
+import NewQuestion from "./NewQuestion";
 
 const QuestionList = () => {
   const questionsTags = [
@@ -90,7 +91,15 @@ const QuestionList = () => {
   return (
     <div className="row">
       <div className="col-lg-10 mx-auto">
-        <p className="lead fw-bold">Filter question by Tags</p>
+        <h1 className="fw-bold pt-3 pb-3">Filter question by Tags</h1>
+        <button
+          type="button"
+          className="btn btn-primary mt-3 mb-3"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Ask your question
+        </button>
         <select
           className="form-select form-select-lg"
           value={selectedOption}
@@ -113,6 +122,7 @@ const QuestionList = () => {
           <EmptyList tagName={questionsTags[selectedOption].label} />
         )}
       </div>
+      <NewQuestion />
     </div>
   );
 };
