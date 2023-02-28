@@ -94,7 +94,7 @@ const QuestionList = () => {
         <h1 className="fw-bold pt-3 pb-3">Filter question by Tags</h1>
         <button
           type="button"
-          className="btn btn-primary mt-3 mb-3"
+          className="btn btn-sm btn-primary mt-3 mb-3"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         >
