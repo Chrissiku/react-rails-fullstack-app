@@ -1,0 +1,18 @@
+databases:
+  - name: question
+    databaseName: question
+    user: question
+
+services:
+  - type: web
+    name: question
+    env: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: question
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
