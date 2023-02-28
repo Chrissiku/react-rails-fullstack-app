@@ -3,9 +3,9 @@ class Api::V1::QuestionsController < ApplicationController
 
   def index
     if params[:tags].present? && params[:tags] != "All"
-      @questions = Question.where(tag: params[:tags])
+      @questions = Question.where(tag: params[:tags]).order(created_at: :desc)
     else
-      @questions = Question.all
+      @questions = Question.all.order(created_at: :desc)
     end
     render json: @questions, status: :ok
   end
@@ -20,5 +20,20 @@ class Api::V1::QuestionsController < ApplicationController
       # @question.update(dislikes_count: @question.dislikes_count + 1)
     end
     render json: @question, status: :ok
+  end
+
+  def create
+    @question = Question.new(question_params)
+    if @question.save
+      render json: { data: @question, status: "success" }, status: :ok
+    else
+      render json: { data: @question.errors.full_messages, status: "failure" }, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def question_params
+    params.require(:question).permit(:title, :tag)
   end
 end

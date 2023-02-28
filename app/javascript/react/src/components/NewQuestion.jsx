@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { URL } from "./utils/constants";
 
 const NewQuestion = () => {
   const questionsTags = [
@@ -19,9 +20,27 @@ const NewQuestion = () => {
     setFormField({ ...formField, [event.target.name]: event.target.value });
   };
 
+  const createQuestion = (data) => {
+    fetch(URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success", data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const handleQuestionSubmit = (event) => {
     event.preventDefault();
     console.log(formField);
+    createQuestion(formField);
   };
 
   return (
