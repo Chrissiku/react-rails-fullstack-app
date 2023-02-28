@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import QuestionDetails from "./QuestionDetails";
 import { URL } from "./utils/constants";
 import EmptyList from "./EmptyList";
+import Loader from "./Loader";
 
 const QuestionList = () => {
   const questionsTags = [
@@ -16,14 +17,17 @@ const QuestionList = () => {
   const [questionsList, setQuestionsList] = useState([]);
   const [selectedOption, setSelectedOption] = useState(questionsTags[0].value);
   const [isShowAlert, setIsShowAlert] = useState(false);
+  const [isShowLoader, setIsShowLoader] = useState(true);
 
   const fetchQuestionsList = () => {
+    setIsShowLoader(false);
     fetch(URL)
       .then((response) => response.json())
       .then((data) => {
         setQuestionsList(data);
         if (data.length === 0) {
           setIsShowAlert(true);
+          setIsShowLoader(true);
         } else {
           setIsShowAlert(false);
         }
@@ -35,6 +39,8 @@ const QuestionList = () => {
   }, []);
 
   const updateSelectedItem = (event) => {
+    setIsShowLoader(false);
+    setIsShowAlert(false);
     setQuestionsList([]);
     setSelectedOption(event.target.value);
     fetch(URL + `?tags=${questionsTags[event.target.value].label}`)
@@ -43,8 +49,7 @@ const QuestionList = () => {
         setQuestionsList(data);
         if (data.length === 0) {
           setIsShowAlert(true);
-        } else {
-          setIsShowAlert(false);
+          setIsShowLoader(true);
         }
       });
   };
@@ -97,11 +102,13 @@ const QuestionList = () => {
             </option>
           ))}
         </select>
-        {questionsList.length > 0
-          ? questionsList.map((question) => (
-              <QuestionDetails question={question} key={question.id} />
-            ))
-          : ""}
+        {questionsList.length > 0 ? (
+          questionsList.map((question) => (
+            <QuestionDetails question={question} key={question.id} />
+          ))
+        ) : (
+          <Loader isShowLoader={isShowLoader} />
+        )}
         {isShowAlert && (
           <EmptyList tagName={questionsTags[selectedOption].label} />
         )}
